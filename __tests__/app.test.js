@@ -12,14 +12,14 @@ describe('demo routes', () => {
     return request(app)
       .post('/api/species')
       .send({
-        id: '2',
-        species_name: 'Feline',
+        id: '1',
+        species: 'Feline',
         extinct: false
       })
       .then((res) => {
         expect(res.body).toEqual({
           id: expect.any(String),
-          species_name: expect.any(String),
+          species: expect.any(String),
           extinct: false
         });
       });
