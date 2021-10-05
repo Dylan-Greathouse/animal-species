@@ -12,16 +12,29 @@ describe('demo routes', () => {
     return request(app)
       .post('/api/species')
       .send({
-        id: '2',
-        species_name: 'Feline',
-        extinct: false
+        id: '1',
+        species: 'Feline',
+        extinct: false,
       })
       .then((res) => {
         expect(res.body).toEqual({
           id: expect.any(String),
-          species_name: expect.any(String),
-          extinct: false
+          species: expect.any(String),
+          extinct: false,
         });
+      });
+  });
+
+  it('post new species to table', () => {
+    request(app).post('/api/species').send({
+      id: '1',
+      species: 'Feline',
+      extinct: false,
+    });
+    return request(app)
+      .get('/api/species')
+      .then((res) => {
+        expect(res.body).toEqual(expect.any(Array));
       });
   });
 
