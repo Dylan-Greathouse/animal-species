@@ -5,5 +5,5 @@ CREATE TABLE species (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     species TEXT NOT NULL,
     extinct BOOLEAN
-)
+);
 
