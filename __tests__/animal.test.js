@@ -138,6 +138,16 @@ describe('animal table routes', () => {
       
   });
 
+  it('Counts the number of animals by species', async() => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .get('/api/animals/roundup')
+      .then((res) => {
+        expect(res.body).toEqual([]);
+      });
+  });
+
   afterAll(() => {
     pool.end();
   });
