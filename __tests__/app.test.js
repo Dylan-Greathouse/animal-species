@@ -5,7 +5,7 @@ const app = require('../lib/app.js');
 
 
 
-describe('species table routes', () => {
+describe.skip('species table routes', () => {
   beforeEach(() => {
     return setup(pool);
   });

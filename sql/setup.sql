@@ -11,7 +11,7 @@ extinct BOOLEAN
 CREATE TABLE animals(
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 animal TEXT NOT NULL,
-species_id BIGINT NOT NULL,
+species_id BIGINT,
 FOREIGN KEY (species_id) REFERENCES species(id)
 );
 
@@ -20,5 +20,5 @@ VALUES ('Feline', false)
 RETURNING *;
 
 INSERT INTO animals (animal, species_id)
-VALUES ('Latte', 1)
-RETURNING *
+VALUES ('Latte', '1')
+RETURNING *;

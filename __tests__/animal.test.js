@@ -3,6 +3,7 @@ const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
 
+
 async function saveSpecies() {
   const testSpecies = [
     {
@@ -10,9 +11,13 @@ async function saveSpecies() {
       extinct: false,
     },
     {
-      name: 'Bear',
+      name: 'Canis lupus',
       extinct: false,
     },
+    {
+      name: 'Ursidae',
+      extinct: false,
+    }
   ];
   await Promise.all(
     testSpecies.map(async (species) => {
@@ -24,17 +29,17 @@ async function saveSpecies() {
 async function saveAnimals() {
   const testAnimals = [
     {
-      animal: 'Siberian Tiger',
+      animal: 'Latte',
+      speciesId: '1'
+    },
+    {
+      animal: 'Wolf',
       speciesId: '2'
     },
     {
-      animal: 'Polar Bear',
+      animal: 'Bear',
       speciesId: '3'
-    },
-    {
-      animal: 'Arctic Wolf',
-      speciesId: '1'
-    },
+    }
   ];
   await Promise.all(
     testAnimals.map(async (animals) => {
@@ -53,16 +58,97 @@ describe('animal table routes', () => {
     return request(app)
       .post('/api/animals')
       .send({
-        animal: 'Siberian Tiger',
+        animal: 'Cat',
         speciesId: '1'
       }
       ).then(res =>
       {
         expect(res.body).toEqual({
           id: '2',
-          animal: 'Siberian Tiger',
+          animal: 'Cat',
           speciesId: '1'
         });
+      });
+  });
+
+  it('Get an animal from table animals by ID', async () => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .get('/api/animals/1')
+      .then(res => {
+        expect(res.body).toEqual({
+          id: '1',
+          animal: 'Latte',
+          speciesId: '1'
+        });
+      });
+  });
+
+  it('Gets all animals and their species', async() => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .get('/api/animals')
+      .then(res => {
+        expect(res.body).toEqual([{
+          id: expect.any(String),
+          animal: expect.any(String),
+          extinct: expect.any(Boolean),
+          species: expect.any(String),
+          species_id: expect.any(String)
+        },
+        {
+          id: expect.any(String),
+          animal: expect.any(String),
+          extinct: expect.any(Boolean),
+          species: expect.any(String),
+          species_id: expect.any(String)
+        }]);
+      });
+  });
+
+  it('Updates an animal from the animals table', async() => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .patch('/api/animals/1')
+      .send({
+        animal: 'Cat',
+        speciesId: '1'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          id: '1',
+          animal: 'Cat',
+          speciesId: '1'
+        });
+      });
+      
+  });
+
+  it('Deletes an animal from the animals table', async() => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .delete('/api/animals/1')
+      .then(res => {
+        expect(res.body).toEqual({});
+      });
+      
+  });
+
+  it('Counts the number of animals by species', async() => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .get('/api/animals/roundup')
+      .then((res) => {
+        expect(res.body).toEqual([{
+          species: 'Feline',
+          count: '2'
+        }
+        ]);
       });
   });
 
