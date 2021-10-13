@@ -127,6 +127,17 @@ describe('animal table routes', () => {
       
   });
 
+  it('Deletes an animal from the animals table', async() => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .delete('/api/animals/1')
+      .then(res => {
+        expect(res.body).toEqual();
+      });
+      
+  });
+
   afterAll(() => {
     pool.end();
   });
