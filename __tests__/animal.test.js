@@ -70,10 +70,12 @@ describe('animal table routes', () => {
     await saveSpecies();
     await saveAnimals();
     return request(app)
-      .get('/api/animals/2')
+      .get('/api/animals/1')
       .then(res => {
         expect(res.body).toEqual({
-          
+          id: '1',
+          animal: 'Latte',
+          speciesId: '1'
         });
       });
   });
