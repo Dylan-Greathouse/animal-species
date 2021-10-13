@@ -3,6 +3,7 @@ const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
 
+
 async function saveSpecies() {
   const testSpecies = [
     {
@@ -112,9 +113,18 @@ describe('animal table routes', () => {
     await saveAnimals();
     return request(app)
       .patch('/api/animals/1')
+      .send({
+        animal: 'Cat',
+        speciesId: '1'
+      })
       .then(res => {
-        expect(res.body).toEqual();
+        expect(res.body).toEqual({
+          id: '1',
+          animal: 'Cat',
+          speciesId: '1'
+        });
       });
+      
   });
 
   afterAll(() => {

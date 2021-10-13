@@ -20,5 +20,5 @@ VALUES ('Feline', false)
 RETURNING *;
 
 INSERT INTO animals (animal, species_id)
-VALUES ('Latte', 1)
+VALUES ('Latte', '1')
 RETURNING *;
