@@ -133,7 +133,7 @@ describe('animal table routes', () => {
     return request(app)
       .delete('/api/animals/1')
       .then(res => {
-        expect(res.body).toEqual();
+        expect(res.body).toEqual({});
       });
       
   });
