@@ -52,9 +52,17 @@ describe('animal table routes', () => {
     await saveSpecies();
     return request(app)
       .post('/api/animals')
-      .send().then(res =>
+      .send({
+        animal: 'Siberian Tiger',
+        speciesId: '1'
+      }
+      ).then(res =>
       {
-        expect(res.body).toEqual();
+        expect(res.body).toEqual({
+          id: '2',
+          animal: 'Siberian Tiger',
+          speciesId: '1'
+        });
       });
   });
 
