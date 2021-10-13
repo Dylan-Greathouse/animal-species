@@ -3,7 +3,9 @@ const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
 
-describe('demo routes', () => {
+
+
+describe('species table routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -25,17 +27,41 @@ describe('demo routes', () => {
       });
   });
 
-  it('post new species to table', () => {
-    request(app).post('/api/species').send({
-      id: '1',
-      species: 'Feline',
-      extinct: false,
-    });
-    return request(app)
-      .get('/api/species')
-      .then((res) => {
-        expect(res.body).toEqual(expect.any(Array));
-      });
+  it('gets all species from table', async () => {
+    await request(app).post('/api/species').send(
+      {
+        species: 'Feline',
+        extinct: false,
+      }
+    
+    );
+
+    await request(app).post('/api/species').send(
+      {
+        species: 'Canis lupus',
+        extinct: false,
+      }
+    
+    );
+    const res = await request(app)
+      .get('/api/species');
+    expect(res.body).toEqual([
+      {
+        id: '1',
+        species: 'Feline',
+        extinct: false
+      },
+      {
+        id: '2',
+        species: 'Feline',
+        extinct: false
+      },
+      {
+        id: '3',
+        species: 'Canis lupus',
+        extinct: false
+      }
+    ]);
   });
 
   afterAll(() => {
