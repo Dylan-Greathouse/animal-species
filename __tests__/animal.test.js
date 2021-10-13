@@ -144,7 +144,11 @@ describe('animal table routes', () => {
     return request(app)
       .get('/api/animals/roundup')
       .then((res) => {
-        expect(res.body).toEqual([]);
+        expect(res.body).toEqual([{
+          species: 'Feline',
+          count: '2'
+        }
+        ]);
       });
   });
 
