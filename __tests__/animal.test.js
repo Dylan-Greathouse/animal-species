@@ -66,6 +66,18 @@ describe('animal table routes', () => {
       });
   });
 
+  it('Get an animal from table animals by ID', async () => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .get('/api/animals/2')
+      .then(res => {
+        expect(res.body).toEqual({
+          
+        });
+      });
+  });
+
   afterAll(() => {
     pool.end();
   });

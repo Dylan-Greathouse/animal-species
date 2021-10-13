@@ -11,7 +11,7 @@ extinct BOOLEAN
 CREATE TABLE animals(
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 animal TEXT NOT NULL,
-species_id BIGINT NOT NULL,
+species_id BIGINT,
 FOREIGN KEY (species_id) REFERENCES species(id)
 );
 
