@@ -3,7 +3,9 @@ const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
 
-describe('demo routes', () => {
+
+
+describe('species table routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -51,6 +53,11 @@ describe('demo routes', () => {
       },
       {
         id: '2',
+        species: 'Feline',
+        extinct: false
+      },
+      {
+        id: '3',
         species: 'Canis lupus',
         extinct: false
       }
