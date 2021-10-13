@@ -80,6 +80,16 @@ describe('animal table routes', () => {
       });
   });
 
+  it('Gets all animals and their species', async() => {
+    await saveSpecies();
+    await saveAnimals();
+    return request(app)
+      .get('/api/animals')
+      .then(res => {
+        expect(res.body).toEqual({});
+      });
+  });
+
   afterAll(() => {
     pool.end();
   });
